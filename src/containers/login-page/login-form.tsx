@@ -40,7 +40,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className={cn("p-16 flex items-center")}>
+    <div className={cn("p-8 md:p-16 flex items-center")}>
       <div className={cn("w-full")}>
         <Logo className={cn("mb-14")} />
 

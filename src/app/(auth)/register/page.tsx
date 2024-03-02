@@ -6,7 +6,7 @@ const RegisterPage = () => {
   return (
     <div
       className={cn(
-        "min-h-screen bg-primary flex justify-center items-center p-16"
+        "min-h-screen md:bg-primary flex justify-center items-center md:p-16"
       )}
     >
       <RegisterForm />

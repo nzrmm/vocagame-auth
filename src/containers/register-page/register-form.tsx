@@ -42,7 +42,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className={cn("w-1/2 p-16 bg-white rounded-lg")}>
+    <div className={cn("md:w-1/2 p-8 md:p-16 bg-white rounded-lg")}>
       <div className={cn("w-full")}>
         <Logo className={cn("mb-14")} />
 

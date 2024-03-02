@@ -4,8 +4,12 @@ import { cn } from "@/libs/utils";
 
 const LoginPage = () => {
   return (
-    <div className={cn("h-screen grid grid-cols-2")}>
-      <div className={cn("bg-primary flex justify-center items-center p-16")}>
+    <div className={cn("h-screen grid md:grid-cols-2")}>
+      <div
+        className={cn(
+          "bg-primary hidden md:flex justify-center items-center p-16"
+        )}
+      >
         <div className={cn("text-white text-center w-2/3")}>
           <h1 className={cn("uppercase text-5xl font-extrabold mb-8")}>
             Lorem

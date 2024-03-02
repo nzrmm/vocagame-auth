@@ -18,14 +18,16 @@ import {
 import Logo from "@/components/logo";
 
 import { cn } from "@/libs/utils";
-import { LoginSchema } from "@/schemas";
+import { RegisterSchema } from "@/schemas";
 
-const LoginForm = () => {
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+const RegisterForm = () => {
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       username: "",
+      phoneNumber: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
@@ -35,19 +37,19 @@ const LoginForm = () => {
     formState: { isValidating, isSubmitting },
   } = form;
 
-  const onSubmit = (data: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (data: z.infer<typeof RegisterSchema>) => {
     console.log(data);
   };
 
   return (
-    <div className={cn("p-16 flex items-center")}>
+    <div className={cn("w-1/2 p-16 bg-white rounded-lg")}>
       <div className={cn("w-full")}>
         <Logo className={cn("mb-14")} />
 
         <div className={cn("mb-10")}>
-          <h1 className={cn("text-5xl font-extrabold mb-5")}>Silahkan LogIn</h1>
+          <h1 className={cn("text-5xl font-extrabold mb-5")}>Daftarkan Akun</h1>
           <p className={cn("text-slate-500")}>
-            Masukkan username dan password anda untuk masuk.
+            Daftar akun anda dengan mengisi form dibawah.
           </p>
         </div>
 
@@ -65,6 +67,26 @@ const LoginForm = () => {
                     <FormControl>
                       <Input
                         placeholder="Masukkan username anda..."
+                        {...field}
+                        className={cn("h-16 p-5")}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={control}
+                name="phoneNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className={cn("text-slate-900")}>
+                      Nomor Handphone
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Masukkan nomor handphone anda..."
                         {...field}
                         className={cn("h-16 p-5")}
                       />
@@ -94,6 +116,27 @@ const LoginForm = () => {
                   </FormItem>
                 )}
               />
+
+              <FormField
+                control={control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className={cn("text-slate-900")}>
+                      Konfirmasi Password
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="Masukkan kembali password anda..."
+                        {...field}
+                        className={cn("h-16 p-5")}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
             <Button
@@ -103,16 +146,16 @@ const LoginForm = () => {
                 "w-full bg-primary/20 text-primary hover:text-white font-bold"
               )}
             >
-              Masuk Sekarang
+              Daftar Sekarang
             </Button>
           </form>
         </Form>
 
         <div className={cn("text-center")}>
           <p className={cn("font-bold text-slate-500")}>
-            Belum punya akun ?{" "}
-            <Link href={"/register"} className={cn("text-primary")}>
-              Daftar sekarang
+            Sudah punya akun ?{" "}
+            <Link href={"/login"} className={cn("text-primary")}>
+              Login sekarang
             </Link>
           </p>
         </div>
@@ -121,4 +164,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

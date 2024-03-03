@@ -1,7 +1,9 @@
 "use client";
 
+import { useTransition } from "react";
 import { z } from "zod";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -19,8 +21,11 @@ import Logo from "@/components/logo";
 
 import { cn } from "@/libs/utils";
 import { LoginSchema } from "@/schemas";
+import { login } from "@/actions/login";
 
 const LoginForm = () => {
+  const [isPending, startTransition] = useTransition();
+
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -29,14 +34,21 @@ const LoginForm = () => {
     },
   });
 
-  const {
-    control,
-    handleSubmit,
-    formState: { isValidating, isSubmitting },
-  } = form;
+  const { reset, control, handleSubmit } = form;
 
-  const onSubmit = (data: z.infer<typeof LoginSchema>) => {
-    console.log(data);
+  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+    startTransition(() => {
+      login(values)
+        .then((data) => {
+          if (!data?.error) {
+            reset();
+            toast.success("Login sukses");
+          } else {
+            toast.error(data?.error);
+          }
+        })
+        .catch(() => toast.error("Terjadi kesalahan"));
+    });
   };
 
   return (
@@ -65,8 +77,9 @@ const LoginForm = () => {
                     <FormControl>
                       <Input
                         placeholder="Masukkan username anda..."
-                        {...field}
                         className={cn("h-16 p-5")}
+                        disabled={isPending}
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -86,8 +99,9 @@ const LoginForm = () => {
                       <Input
                         type="password"
                         placeholder="Masukkan password anda..."
-                        {...field}
                         className={cn("h-16 p-5")}
+                        disabled={isPending}
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -99,6 +113,7 @@ const LoginForm = () => {
             <Button
               type="submit"
               size="xl"
+              disabled={isPending}
               className={cn(
                 "w-full bg-primary/20 text-primary hover:text-white font-bold"
               )}

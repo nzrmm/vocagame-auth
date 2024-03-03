@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
-import { plusJakartaSans } from "@/libs/fonts";
+import { Toaster } from "react-hot-toast";
 
+import { plusJakartaSans } from "@/libs/fonts";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -16,7 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={plusJakartaSans.className}>{children}</body>
+      <body className={plusJakartaSans.className}>
+        <Toaster />
+        {children}
+      </body>
     </html>
   );
 }

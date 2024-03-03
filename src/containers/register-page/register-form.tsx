@@ -1,7 +1,9 @@
 "use client";
 
 import { z } from "zod";
+import axios from "axios";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -19,8 +21,11 @@ import Logo from "@/components/logo";
 
 import { cn } from "@/libs/utils";
 import { RegisterSchema } from "@/schemas";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -32,13 +37,22 @@ const RegisterForm = () => {
   });
 
   const {
+    reset,
     control,
     handleSubmit,
-    formState: { isValidating, isSubmitting },
+    formState: { isValid, isSubmitting },
   } = form;
 
-  const onSubmit = (data: z.infer<typeof RegisterSchema>) => {
-    console.log(data);
+  const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
+    try {
+      const { data } = await axios.post("/api/user", values);
+
+      reset();
+      toast.success(data?.message);
+      router.push("/login");
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
+    }
   };
 
   return (
@@ -67,8 +81,9 @@ const RegisterForm = () => {
                     <FormControl>
                       <Input
                         placeholder="Masukkan username anda..."
-                        {...field}
                         className={cn("h-16 p-5")}
+                        disabled={isSubmitting}
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -87,8 +102,9 @@ const RegisterForm = () => {
                     <FormControl>
                       <Input
                         placeholder="Masukkan nomor handphone anda..."
-                        {...field}
                         className={cn("h-16 p-5")}
+                        disabled={isSubmitting}
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -108,8 +124,9 @@ const RegisterForm = () => {
                       <Input
                         type="password"
                         placeholder="Masukkan password anda..."
-                        {...field}
                         className={cn("h-16 p-5")}
+                        disabled={isSubmitting}
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -129,8 +146,9 @@ const RegisterForm = () => {
                       <Input
                         type="password"
                         placeholder="Masukkan kembali password anda..."
-                        {...field}
                         className={cn("h-16 p-5")}
+                        disabled={isSubmitting}
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -142,6 +160,7 @@ const RegisterForm = () => {
             <Button
               type="submit"
               size="xl"
+              disabled={!isValid || isSubmitting}
               className={cn(
                 "w-full bg-primary/20 text-primary hover:text-white font-bold"
               )}

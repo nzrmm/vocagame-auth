@@ -18,4 +18,6 @@ model User {
   username      String    @unique
   phoneNumber   String
   password      String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }

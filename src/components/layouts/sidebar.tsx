@@ -1,6 +1,6 @@
 "use client";
 
-import { CircleUserRound } from "lucide-react";
+import { Home, CircleUserRound } from "lucide-react";
 
 import Logo from "@/components/logo";
 import { SidebarItem } from "@/components/layouts";
@@ -8,9 +8,14 @@ import { cn } from "@/libs/utils";
 
 const routes = [
   {
+    icon: Home,
+    label: "Dashboard",
+    href: "/",
+  },
+  {
     icon: CircleUserRound,
     label: "Profile",
-    href: "/",
+    href: "/profile",
   },
 ];
 

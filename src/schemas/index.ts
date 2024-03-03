@@ -33,3 +33,23 @@ export const RegisterSchema = z
     message: "Password dan Konfirmasi Password tidak sesuai!",
     path: ["confirmPassword"],
   });
+
+export const ProfileSchema = z.object({
+  username: z.string().min(1, {
+    message: "Username tidak boleh kosong!",
+  }),
+  phoneNumber: z
+    .string()
+    .min(10, {
+      message: "Nomor Handphone minimal berisi 10 angka!",
+    })
+    .max(13, {
+      message: "Nomor Handphone maksimal berisi 13 angka!",
+    }),
+  oldPassword: z.string().min(1, {
+    message: "Old Password tidak boleh kosong!",
+  }),
+  newPassword: z.string().min(1, {
+    message: "New Password tidak boleh kosong!",
+  }),
+});

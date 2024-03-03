@@ -1,14 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { LogOut } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { SidebarMobile } from "@/components/layouts";
 
 import { cn } from "@/libs/utils";
+import { logout } from "@/actions/logout";
 
 const Navbar = () => {
+  const onClick = () => {
+    logout();
+  };
+
   return (
     <nav
       className={cn(
@@ -18,7 +22,7 @@ const Navbar = () => {
       <SidebarMobile />
 
       <div className={cn("flex items-center gap-2 ml-auto")}>
-        <Button size="sm" variant="ghost">
+        <Button size="sm" variant="ghost" onClick={onClick}>
           <LogOut className={cn("w-4 h-4 mr-2")} /> Logout
         </Button>
       </div>

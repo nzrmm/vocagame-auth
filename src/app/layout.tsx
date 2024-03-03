@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 
 import { Toaster } from "react-hot-toast";
+import { SessionProvider } from "next-auth/react";
 
+import { auth } from "@/auth";
 import { plusJakartaSans } from "@/libs/fonts";
+
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -10,17 +13,21 @@ export const metadata: Metadata = {
   description: "Vocagame auth page",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
-    <html lang="en">
-      <body className={plusJakartaSans.className}>
-        <Toaster />
-        {children}
-      </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang="en">
+        <body className={plusJakartaSans.className}>
+          <Toaster />
+          {children}
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

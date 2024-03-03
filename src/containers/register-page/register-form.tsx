@@ -1,10 +1,12 @@
 "use client";
 
+import { useTransition } from "react";
 import { z } from "zod";
 import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
@@ -21,10 +23,11 @@ import Logo from "@/components/logo";
 
 import { cn } from "@/libs/utils";
 import { RegisterSchema } from "@/schemas";
-import { useRouter } from "next/navigation";
+import { register } from "@/actions/register";
 
 const RegisterForm = () => {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -36,23 +39,24 @@ const RegisterForm = () => {
     },
   });
 
-  const {
-    reset,
-    control,
-    handleSubmit,
-    formState: { isValid, isSubmitting },
-  } = form;
+  const { reset, control, handleSubmit } = form;
 
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
-    try {
-      const { data } = await axios.post("/api/user", values);
+    startTransition(() => {
+      register(values)
+        .then((data) => {
+          if (data?.success) {
+            reset();
+            toast.success(data.success);
+            router.push("/login");
+          }
 
-      reset();
-      toast.success(data?.message);
-      router.push("/login");
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message);
-    }
+          if (data.error) {
+            toast.error(data.error);
+          }
+        })
+        .catch(() => toast.error("Terjadi kesalahan"));
+    });
   };
 
   return (
@@ -82,7 +86,7 @@ const RegisterForm = () => {
                       <Input
                         placeholder="Masukkan username anda..."
                         className={cn("h-16 p-5")}
-                        disabled={isSubmitting}
+                        disabled={isPending}
                         {...field}
                       />
                     </FormControl>
@@ -103,7 +107,7 @@ const RegisterForm = () => {
                       <Input
                         placeholder="Masukkan nomor handphone anda..."
                         className={cn("h-16 p-5")}
-                        disabled={isSubmitting}
+                        disabled={isPending}
                         {...field}
                       />
                     </FormControl>
@@ -125,7 +129,7 @@ const RegisterForm = () => {
                         type="password"
                         placeholder="Masukkan password anda..."
                         className={cn("h-16 p-5")}
-                        disabled={isSubmitting}
+                        disabled={isPending}
                         {...field}
                       />
                     </FormControl>
@@ -147,7 +151,7 @@ const RegisterForm = () => {
                         type="password"
                         placeholder="Masukkan kembali password anda..."
                         className={cn("h-16 p-5")}
-                        disabled={isSubmitting}
+                        disabled={isPending}
                         {...field}
                       />
                     </FormControl>
@@ -160,7 +164,7 @@ const RegisterForm = () => {
             <Button
               type="submit"
               size="xl"
-              disabled={!isValid || isSubmitting}
+              disabled={isPending}
               className={cn(
                 "w-full bg-primary/20 text-primary hover:text-white font-bold"
               )}

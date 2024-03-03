@@ -2,7 +2,6 @@
 
 import { useTransition } from "react";
 import { z } from "zod";
-import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";

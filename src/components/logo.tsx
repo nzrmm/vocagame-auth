@@ -1,17 +1,32 @@
 import { cn } from "@/libs/utils";
 import { ComponentProps } from "react";
 
-const Logo = ({ className, ...props }: ComponentProps<"div">) => {
+type Props = ComponentProps<"div"> & {
+  size?: "small" | "large";
+};
+
+const Logo = ({ size = "large", className, ...props }: Props) => {
   return (
     <div
       className={cn(
-        "w-14 h-14 rounded-xl bg-primary/20",
+        "w-14 h-14 bg-primary/20",
         "flex items-center justify-center",
+        {
+          "w-14 h-14 rounded-xl": size === "large",
+          "w-10 h-10 rounded-sm": size === "small",
+        },
         className
       )}
       {...props}
     >
-      <span className={cn("text-3xl font-semibold text-primary")}>V</span>
+      <span
+        className={cn(" font-semibold text-primary", {
+          "text-3xl": size === "large",
+          "text-xl": size === "small",
+        })}
+      >
+        V
+      </span>
     </div>
   );
 };

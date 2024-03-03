@@ -1,7 +1,9 @@
-import React from "react";
+import { auth } from "@/auth";
 
-const Home = () => {
-  return <div>Home</div>;
+const Home = async () => {
+  const session = await auth();
+
+  return <div>{JSON.stringify(session)}</div>;
 };
 
 export default Home;

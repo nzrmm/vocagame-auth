@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Vocagame Auth
 
-## Getting Started
+- Vocagame Auth - Dashboard
+- Demo: [Loom Record](https://www.loom.com/share/c4641d513d0b4d7c928d6ddcf15601ff?sid=6c3c22fa-db59-469d-8b96-09ab0088961f)
 
-First, run the development server:
+## Tech Stack
+
+- Next v14 + Typescript (Frontend Framework)
+- Tailwind CSS + Shadcn UI + Lucide Icon (CSS Utility)
+- React Hot Toast (Notification)
+- Next Auth v5 (Auth)
+- Neon (Serverless PosgreSql)
+- Prisma ORM (ORM for working with Serverless PosgreSql)
+- React Hook Form + Zod (Validation Library)
+- Eslint (Code Formatter Library)
+
+## Features
+
+- Using Next v14 and Typescript
+- Tailwind design with Shadcn UI
+- Full responsiveness
+- Swith between theme (blue, orange, or system)
+- Implementing toast for success and error message
+- Using Neon (Serverless PostgreSQL) for store registered data
+- Using Prisma ORM for working with Neon (Serverless PosgreSQL)
+- Credentials provider using Next Auth
+- Login component
+- Register component
+- Impelementing server actions Next v14
+- Implementing middleware for protected and unprotected route
+- Implementing session with Next Auth
+- Edit profile in profile page
+- Validate all forms before submitting
+
+## Prerequisites
+
+- Install Node v18.18.0
+- Install Yarn v1.22.19
+
+## Run Locally
+
+Clone this repository.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git@github.com:nzrmm/vocagame-auth.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Install dependencies.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+  yarn
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Setup .env file with my configuration
 
-## Learn More
+```bash
+DATABASE_URL="postgresql://nzrmm:0Dy9upScaVKr@ep-rough-king-a11udu94-pooler.ap-southeast-1.aws.neon.tech/vocagame-auth?sslmode=require"
+AUTH_SECRET="8ddd4c1e16d4680a3f35d50c0ced1aa1"
+```
 
-To learn more about Next.js, take a look at the following resources:
+Setup Prisma
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npx prisma generate
+npx prisma db push --force-reset
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Run development server
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+  yarn dev
+```

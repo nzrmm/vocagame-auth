@@ -49,7 +49,5 @@ export const ProfileSchema = z.object({
   oldPassword: z.string().min(1, {
     message: "Old Password tidak boleh kosong!",
   }),
-  newPassword: z.string().min(1, {
-    message: "New Password tidak boleh kosong!",
-  }),
+  newPassword: z.string(),
 });

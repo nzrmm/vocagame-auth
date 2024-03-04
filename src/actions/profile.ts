@@ -26,7 +26,7 @@ export const profile = async (
   }
 
   // Update user
-  const hashedPassword = await hash(newPassword, 10);
+  const hashedPassword = await hash(newPassword || oldPassword, 10);
   const user = await db.user.update({
     where: { id },
     data: { username, phoneNumber, password: hashedPassword },

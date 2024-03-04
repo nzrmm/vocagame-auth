@@ -7,11 +7,11 @@ import { SidebarItem } from "@/components/layouts";
 import { cn } from "@/libs/utils";
 
 const routes = [
-  {
-    icon: Home,
-    label: "Dashboard",
-    href: "/",
-  },
+  // {
+  //   icon: Home,
+  //   label: "Dashboard",
+  //   href: "/",
+  // },
   {
     icon: CircleUserRound,
     label: "Profile",

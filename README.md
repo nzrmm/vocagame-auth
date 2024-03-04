@@ -29,6 +29,7 @@
 - Impelementing server actions Next v14
 - Implementing middleware for protected and unprotected route
 - Implementing session with Next Auth
+- Implementing session expired in 1 minute
 - Edit profile in profile page
 - Validate all forms before submitting
 

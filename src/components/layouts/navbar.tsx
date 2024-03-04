@@ -3,6 +3,7 @@
 import { LogOut } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import ToggleTheme from "@/components/toggle-theme";
 import { SidebarMobile } from "@/components/layouts";
 
 import { cn } from "@/libs/utils";
@@ -22,6 +23,8 @@ const Navbar = () => {
       <SidebarMobile />
 
       <div className={cn("flex items-center gap-2 ml-auto")}>
+        <ToggleTheme />
+
         <Button size="sm" variant="ghost" onClick={onClick}>
           <LogOut className={cn("w-4 h-4 mr-2")} /> Logout
         </Button>
